@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "state": "SIN RUTA",
+    "latitude": 13.480619,
+    "longitude": -88.18494,
+    "gasoline_level_parcentage": "100",
+    "speedKm_average": "60",
+    "totalKm": "0",
+    "date": "2024-06-01T22:17:24.608Z"
+  },
+  {
+    "id": 2,
+    "state": "CON RUTA",
+    "latitude": 13.70007,
+    "longitude": -89.15153,
+    "gasoline_level_parcentage": "90",
+    "speedKm_average": "50",
+    "totalKm": "120",
+    "date": "2024-06-01T23:50:17.780Z"
+  }
+]

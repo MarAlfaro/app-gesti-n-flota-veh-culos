@@ -3,6 +3,8 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const geocode = require("./geocode");
 const getRoute = require("./directions");
+const fs = require("fs");
+const path = require("path");
 
 dotenv.config();
 
@@ -19,36 +21,54 @@ app.get("/config", (req, res) => {
   res.send({ mapboxToken: process.env.MAPBOX_TOKEN });
 });
 
-// Ruta para registrar un nuevo envío
+// Ruta para registrar flota
 app.post("/register", async (req, res) => {
-  const { code, pointAAddress, pointBAddress } = req.body;
+  const {
+    state,
+    location,
+    gasoline_level_parcentage,
+    speedKm_average,
+    totalKm,
+  } = req.body;
   try {
-    const pointA = await geocode(pointAAddress);
-    const pointB = await geocode(pointBAddress);
-    const route = await getRoute(pointA, pointB);
-    const delivery = {
-      code,
-      pointA,
-      pointB,
-      pointAAddress,
-      pointBAddress,
-      route,
-    };
-    deliveries.push(delivery);
-    res.send({ message: "Envío registrado con éxito", delivery });
+    const { latitude, longitude } = await geocode(location);
+
+    const flotaPath = path.join(__dirname, "flota.json");
+    let flotas = [];
+
+    if (fs.existsSync(flotaPath)) {
+      flotas = JSON.parse(fs.readFileSync(flotaPath));
+    }
+
+    flotas.push({
+      id: flotas.length + 1,
+      state,
+      latitude,
+      longitude,
+      gasoline_level_parcentage,
+      speedKm_average,
+      totalKm,
+      date: new Date(),
+    });
+
+    fs.writeFileSync(flotaPath, JSON.stringify(flotas, null, 2));
+
+    const response = JSON.parse(fs.readFileSync(flotaPath, "utf-8"));
+
+    res.send({ message: "Flota registrada con éxito", response });
   } catch (error) {
     res.status(500).send({ error: error.message });
   }
 });
 
-// Ruta para buscar un envío por código
-app.get("/search/:code", (req, res) => {
-  const code = req.params.code;
-  const delivery = deliveries.find((delivery) => delivery.code === code);
-  if (delivery) {
-    res.send(delivery);
+// Ruta obtener las flotas
+app.get("/flotas", (req, res) => {
+  const flotaPath = path.join(__dirname, "flota.json");
+  if (fs.existsSync(flotaPath)) {
+    const flotas = JSON.parse(fs.readFileSync(flotaPath));
+    res.json(flotas);
   } else {
-    res.status(404).send({ message: "Envío no encontrado" });
+    res.json([]);
   }
 });
 
