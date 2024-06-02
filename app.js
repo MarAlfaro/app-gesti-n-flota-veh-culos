@@ -40,24 +40,61 @@ app.post("/register", async (req, res) => {
       flotas = JSON.parse(fs.readFileSync(flotaPath));
     }
 
-    flotas.push({
+    const newFlota = {
       id: flotas.length + 1,
       state,
       latitude,
       longitude,
+      location,
       gasoline_level_parcentage,
       speedKm_average,
       totalKm,
       date: new Date(),
-    });
+    };
+
+    flotas.push(newFlota);
 
     fs.writeFileSync(flotaPath, JSON.stringify(flotas, null, 2));
 
-    const response = JSON.parse(fs.readFileSync(flotaPath, "utf-8"));
-
-    res.send({ message: "Flota registrada con éxito", response });
+    res.send({ message: "Flota registrada con éxito", newFlota });
   } catch (error) {
     res.status(500).send({ error: error.message });
+  }
+});
+
+app.put("/update/:id", async (req, res) => {
+  const { id } = req.params;
+  const updateFlota = req.body;
+  const flotasPah = path.join(__dirname, "flota.json");
+  const flotas = JSON.parse(fs.readFileSync(flotasPah));
+  const flotaIndex = flotas.findIndex((flota) => flota.id === Number(id));
+  if (flotaIndex === -1) {
+    return res.status(404).json({ message: "Flota no encontrada" });
+  }
+  try {
+    let latitude, longitude;
+    if (updateFlota.location) {
+      const response = await geocode(updateFlota.location);
+      latitude = response.latitude;
+      longitude = response.longitude;
+    } else {
+      latitude = flotas[flotaIndex].latitude;
+      longitude = flotas[flotaIndex].longitude;
+    }
+    flotas[flotaIndex] = {
+      ...flotas[flotaIndex],
+      ...updateFlota,
+      latitude,
+      longitude,
+      date: new Date(),
+    };
+    fs.writeFileSync(flotasPah, JSON.stringify(flotas, null, 2));
+    res.send({
+      message: "flota actualizada con exito",
+      response: flotas[flotaIndex],
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

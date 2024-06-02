@@ -1,22 +1,35 @@
 [
   {
     "id": 1,
-    "state": "SIN RUTA",
-    "latitude": 13.480619,
-    "longitude": -88.18494,
-    "gasoline_level_parcentage": "100",
-    "speedKm_average": "60",
-    "totalKm": "0",
-    "date": "2024-06-01T22:17:24.608Z"
+    "state": "CON RUTA",
+    "latitude": 13.327346,
+    "longitude": -88.570854,
+    "location": "El Salvador, Usulutan, Jiquilisco",
+    "gasoline_level_parcentage": "50",
+    "speedKm_average": "90",
+    "totalKm": "3000",
+    "date": "2024-06-02T16:38:02.734Z"
   },
   {
     "id": 2,
     "state": "CON RUTA",
-    "latitude": 13.70007,
-    "longitude": -89.15153,
+    "latitude": 13.5738445,
+    "longitude": -89.1262575,
+    "location": "El Salvador, Comalapa, Autopista comalapa",
     "gasoline_level_parcentage": "90",
-    "speedKm_average": "50",
-    "totalKm": "120",
-    "date": "2024-06-01T23:50:17.780Z"
+    "speedKm_average": "80",
+    "totalKm": "5000",
+    "date": "2024-06-02T16:18:57.726Z"
+  },
+  {
+    "id": 3,
+    "state": "SIN RUTA",
+    "latitude": 13.64392,
+    "longitude": -88.7849,
+    "location": "El Salvador, San Vicente",
+    "gasoline_level_parcentage": "100",
+    "speedKm_average": "80",
+    "totalKm": "10",
+    "date": "2024-06-02T16:21:23.790Z"
   }
 ]
