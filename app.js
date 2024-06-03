@@ -71,6 +71,12 @@ app.put("/update/:id", async (req, res) => {
   if (flotaIndex === -1) {
     return res.status(404).json({ message: "Flota no encontrada" });
   }
+  if (flotas[flotaIndex].state === "SIN RUTA") {
+    return res
+      .status(400)
+      .json({ message: "No se puede actualizar una flota sin ruta" });
+  }
+
   try {
     let latitude, longitude;
     if (updateFlota.location) {
