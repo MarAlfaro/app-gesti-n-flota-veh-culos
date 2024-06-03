@@ -72,16 +72,11 @@ app.put("/update/:id", async (req, res) => {
     return res.status(404).json({ message: "Flota no encontrada" });
   }
 
-  if (
-    updateFlota.gasoline_level_parcentage ||
-    updateFlota.speedKm_average ||
-    updateFlota.totalKm
-  ) {
-    if (flotas[flotaIndex].state === "SIN RUTA") {
-      return res
-        .status(400)
-        .json({ message: "No se puede actualizar una flota sin ruta" });
-    }
+  if (flotas[flotaIndex].state === "SIN RUTA") {
+    return res.status(400).json({
+      message:
+        "No se puede actualizar una flota sin ruta, actualza el estado de la flota",
+    });
   }
 
   try {
