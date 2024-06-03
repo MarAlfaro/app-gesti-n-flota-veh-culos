@@ -5,9 +5,67 @@
   <title>Aplicación de Rastreo de Paquetes</title>
   <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css" rel="stylesheet">
   <style>
-    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
-    #mapa { position: absolute; top: 0; bottom: 0; width: 100%; }
-    #formulario { position: absolute; top: 10px; left: calc(50% - 100px); background: white; padding: 10px; z-index: 1; border-radius: 4px; }
+    body { 
+      margin: 0; 
+      padding: 0; 
+      font-family: Arial, sans-serif; 
+      background-color: #f4f4f4;
+    }
+    #mapa { 
+      position: absolute; 
+      top: 0; 
+      bottom: 0; 
+      left: 0; 
+      right: 300px; 
+    }
+    #formulario { 
+      position: absolute; 
+      top: 0; 
+      right: 0; 
+      bottom: 0; 
+      width: 300px; 
+      background: white; 
+      padding: 20px; 
+      z-index: 1; 
+      border-left: 1px solid #ccc; 
+      box-shadow: -2px 0 4px rgba(0,0,0,0.1); 
+      overflow-y: auto; 
+    }
+    #formulario p {
+      margin-bottom: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: center;
+    }
+    #formulario label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    #formulario input {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #formulario input[readonly] {
+      background-color: #e9ecef;
+    }
+    #formulario button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      border-radius: 4px;
+      background-color: #28a745;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    #formulario button:hover {
+      background-color: #218838;
+    }
     .mapboxgl-marker {
       max-width: 200px;
       cursor: pointer;
@@ -18,10 +76,7 @@
       height: 50px;
       background-size: cover;
     }
-    .location p:first-child {
-      text-align: center;
-    }
-    .performance p:first-child {
+    .location p:first-child, .performance p:first-child {
       text-align: center;
     }
   </style>
@@ -29,6 +84,36 @@
 <body>
   <div id="formulario">
     <p>Lista de vehículos de la flota</p>
+    <form id="flotaForm">
+      <div>
+        <label for="flotaId">ID:</label>
+        <input type="text" id="flotaId" name="id" readonly>
+      </div>
+      <div>
+        <label for="state">Estado:</label>
+        <input type="text" id="state" name="state" required>
+      </div>
+      <div>
+        <label for="location">Ubicación:</label>
+        <input type="text" id="location" name="location" required>
+      </div>
+      <div>
+        <label for="gasoline_level_parcentage">Nivel de Gasolina (%):</label>
+        <input type="number" id="gasoline_level_parcentage" name="gasoline_level_parcentage" required>
+      </div>
+      <div>
+        <label for="speedKm_average">Velocidad Promedio (km/h):</label>
+        <input type="number" id="speedKm_average" name="speedKm_average" required>
+      </div>
+      <div>
+        <label for="totalKm">Total Kilometraje (km):</label>
+        <input type="number" id="totalKm" name="totalKm" required>
+      </div>
+      <div>
+        <button type="submit">Registrar / Actualizar</button> <br><br>
+        <button type="reset">Limpiar Formulario</button>
+      </div>
+    </form>
   </div>
   <div id='mapa'></div>
   <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>

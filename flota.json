@@ -31,5 +31,16 @@
     "speedKm_average": "80",
     "totalKm": "10",
     "date": "2024-06-02T16:21:23.790Z"
+  },
+  {
+    "id": 4,
+    "state": "SIN RUTA",
+    "latitude": 13.994529,
+    "longitude": -89.557,
+    "location": "Santa Ana, El Salvador",
+    "gasoline_level_parcentage": "100",
+    "speedKm_average": "90",
+    "totalKm": "90",
+    "date": "2024-06-03T21:08:15.291Z"
   }
 ]
